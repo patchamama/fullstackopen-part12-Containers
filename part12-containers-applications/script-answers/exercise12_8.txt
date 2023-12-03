@@ -1,0 +1,47 @@
+cd part12-containers-applications/todo-app/todo-backend
+
+# MongoDB in a docker executed with a persistent data in `./mongo_data`
+docker compose -f docker-compose-dev.yml down
+docker compose -f docker-compose-dev.yml up
+
+# in a new terminal (or use `docker compose -d ....` before)
+docker container ls
+docker exec -it <ID-OR-NAME> bash
+
+# in the terminal of the container
+mongosh -u root -p example
+
+# in the mongo cli (mongosh)
+show dbs
+use the_database
+show collections
+db.todos.find({})
+
+# insert a new record
+db.todos.insertOne({ text: "Increase the number of tools in my toolbelt", done: false})
+
+# in a new terminal (or exit for the `docker exec -it ...`)
+MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
+
+# browse http://localhost:3000/todos to check if the new record exist...
+# Al fine:
+
+# [
+#     {
+#         _id: "656cca5ac3e6c304dc1ced64",
+#         text: "Write code",
+#         done: true
+#     },
+#     {
+#         _id: "656cca5ac3e6c304dc1ced65",
+#         text: "Learn about containers",
+#         done: false
+#     },
+#     {
+#         _id: "656ce14aa83b8edcc69372ee",
+#         text: "Increase the number of tools in my toolbelt",
+#         done: false
+#     }
+# ]
+
+# Also is fine with the url: `http://localhost:3000/todos/656ce14aa83b8edcc69372ee`
