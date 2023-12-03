@@ -1,0 +1,6 @@
+cd part12-containers-applications/todo-app/todo-backend
+docker build -t express-server-todo-backend . 
+docker run -p 3000:3000 express-server-todo-backend
+
+docker container ls 
+docker container kill <id> 
