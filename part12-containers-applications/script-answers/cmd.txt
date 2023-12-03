@@ -1,0 +1,2 @@
+curl https://www.helsinki.fi/en  > exercise12_1.txt
+curl http://helsinki.fi  > exercise12_1_.txt
