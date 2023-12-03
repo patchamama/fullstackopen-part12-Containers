@@ -1,6 +1,6 @@
 const express = require('express')
 const { Todo } = require('../mongo')
-const { setAsync, getAsync } = require('../redis')
+const { updateRedis } = require('../util/redis')
 const router = express.Router()
 
 /* GET todos listing. */
@@ -17,8 +17,7 @@ router.post('/', async (req, res) => {
   })
 
   // Increment added_todos counter in Redis
-  const added_todos = await getAsync('added_todos') // || setAsync('added_todos', '0')
-  await setAsync('added_todos', parseInt(added_todos) + 1)
+  updateRedis(1)
 
   res.send(todo)
 })
@@ -37,8 +36,7 @@ const findByIdMiddleware = async (req, res, next) => {
 singleRouter.delete('/', async (req, res) => {
   // Increment added_todos counter in Redis if done is false
   if (req.body.done === false) {
-    const added_todos = await getAsync('added_todos')
-    await setAsync('added_todos', parseInt(added_todos) - 1)
+    updateRedis(-1)
   }
 
   await req.todo.delete()
@@ -57,8 +55,7 @@ singleRouter.put('/', async (req, res) => {
 
   // Increment added_todos counter in Redis if done is false
   if (req.body.done === false) {
-    const added_todos = await getAsync('added_todos')
-    await setAsync('added_todos', parseInt(added_todos) + 1)
+    updateRedis(1)
   }
 
   const todo = await Todo.findByIdAndUpdate(req.todo.id, {
@@ -70,11 +67,6 @@ singleRouter.put('/', async (req, res) => {
 
 router.use('/:id', findByIdMiddleware, singleRouter)
 
-const initRedis = async () => {
-  const todos = await Todo.find({ done: false })
-  await setAsync('added_todos', todos.length)
-}
-
-initRedis()
+// updateRedis()
 
 module.exports = router
