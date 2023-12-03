@@ -1,0 +1,10 @@
+cd part12-containers-applications/todo-app/todo-backend
+
+docker compose down
+docker compose -f docker-compose.dev.yml up
+
+# in a new terminal
+cd part12-containers-applications/todo-app/todo-backend
+npm ci
+MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
+# browse http://localhost:3000/todos
