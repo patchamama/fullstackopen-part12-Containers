@@ -8,7 +8,7 @@ _https://fullstackopen.com/en/part12_
 
 ## b. Building and configuring enviroments
 
-- [Exercises 12.5.]() | [Exercises 12.6.]() | [Exercises 12.7.]() | [Exercises 12.8.]() | [Exercises 12.9.]() | [Exercises 12.10.]() | [Exercises 12.11.]() | [Exercises 12.12.]()
+- [Exercises 12.5.](https://github.com/patchamama/fullstackopen-part12-Containers/commit/66b2409602f67154075f8049c9836fff84d775db) | [Exercises 12.6.]() | [Exercises 12.7.]() | [Exercises 12.8.]() | [Exercises 12.9.]() | [Exercises 12.10.]() | [Exercises 12.11.]() | [Exercises 12.12.]()
 
 ## c. Basics of Orchestration
 
