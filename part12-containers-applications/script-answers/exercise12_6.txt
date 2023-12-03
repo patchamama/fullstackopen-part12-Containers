@@ -1,0 +1,3 @@
+cd part12-containers-applications/todo-app/todo-backend
+
+docker compose up
