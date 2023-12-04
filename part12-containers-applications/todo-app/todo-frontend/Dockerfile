@@ -6,6 +6,9 @@ COPY . .
 
 RUN npm ci
 
+# Run tests in the intermediate testing stage
+RUN CI=true npm test
+
 ENV REACT_APP_BACKEND_URL=http://localhost:3000
 
 RUN npm run build
