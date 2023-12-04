@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const configs = require('../util/config')
-const { set } = require('../app')
+// const { set } = require('../app')
 const { updateRedis } = require('../util/redis')
 
 let visits = 0
