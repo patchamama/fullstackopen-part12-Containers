@@ -1,0 +1,21 @@
+cd part12-containers-applications/todo-app/todo-backend
+
+# MongoDB in a docker executed with a persistent data in `./mongo_data`
+docker compose -f docker-compose-dev.yml down
+docker compose -f docker-compose-dev.yml up
+
+# Execute local app with redis support and mongodb connection
+REDIS_URL=redis://localhost:6379 MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
+
+# in a new terminal (or use `docker compose -d ....` before)
+docker container ls
+# use de ID of container with redis image as id
+docker exec -it <ID-OR-NAME> bash 
+redis-cli
+KEYS *todos
+GET added_todos
+SET added_todos 9001
+DEL added_todos
+
+browse http://localhost:3000/statistics
+
