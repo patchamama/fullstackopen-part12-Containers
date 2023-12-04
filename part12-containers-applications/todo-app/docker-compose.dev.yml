@@ -12,20 +12,20 @@ services:
     image: hello-front-dev
     build:
       context: .
-      dockerfile: dev.Dockerfile
+      dockerfile: todo-frontend/dev.Dockerfile
     volumes:
-      - ./:/usr/src/app
+      - ./todo-frontend/:/usr/src/app
     ports:
       - 3000:3000
-    container_name: hello-front-dev1
+    container_name: hello-front-dev2
 
   nginx:
     image: nginx:1.20.1
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8080:80
-    container_name: reverse-proxy
+    container_name: reverse-proxy2
     depends_on:
       - app # wait for the frontend container to be started
 
@@ -33,4 +33,4 @@ services:
   # debug-helper:
   #   image: busybox
 # execute the following command to start the container
-# docker compose up
+# docker compose -f docker-compose.dev.yml  up
