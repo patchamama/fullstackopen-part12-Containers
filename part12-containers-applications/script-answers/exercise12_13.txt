@@ -1,0 +1,30 @@
+
+## Backend
+cd part12-containers-applications/todo-app/todo-backend
+
+# MongoDB in a docker executed with a persistent data in `./mongo_data`
+docker compose -f docker-compose-dev.yml down
+docker compose -f docker-compose-dev.yml up
+
+# in a new terminal 
+cd part12-containers-applications/todo-app/todo-backend
+# Execute local app with redis support and mongodb connection
+REDIS_URL=redis://localhost:6379 MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev
+# Test counter: http://localhost:3000
+# Test todos: http://localhost:3000/todos
+
+
+## Frontend
+# in a new terminal
+cd part12-containers-applications/todo-app/todo-frontend
+npm ci
+REACT_APP_BACKEND_URL=http://localhost:3000 PORT=3001 npm start
+# browse http://localhost:3001
+
+## After Test frontend
+#1. Create Dockerfile and execute
+#2. Build the Docker Image:
+docker build . -t todo-frontend
+#3. Run the Docker Container:
+docker run -p 8000:80 todo-frontend
+# browse http://localhost:8000
