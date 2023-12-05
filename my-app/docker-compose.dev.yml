@@ -1,0 +1,47 @@
+version: '3.8' # Version 3.8 is quite new and should work
+
+services:
+  app:
+    image: myapp-frontend-dev
+    build:
+      context: .
+      dockerfile: ./frontend/dev.Dockerfile
+    volumes:
+      - ./frontend/:/usr/src/app
+    ports:
+      - 3000:3000
+    environment:
+      - REACT_APP_BACKEND_URL=http://server:3003/
+    container_name: myapp-front-dev
+
+  server:
+    image: myapp-backend-dev
+    build:
+      context: . # The context will pick this directory as the "build context"
+      dockerfile: ./backend/dev.Dockerfile # This will simply tell which dockerfile to read
+    volumes:
+      - ./backend/:/usr/src/app
+    ports:
+      - 3003:3003
+    container_name: myapp-backend-dev # This will name the container hello-front-dev
+
+# execute the following command to start the container
+# docker compose -f docker-compose.dev.yml up
+
+# error: Docker run fails "return process.dlopen(module, path.toNamespacedPath(filename));"
+# solution: remove node_modules binary for macOsX and copy from container (linux) to host (macOsX), so
+# when the volume is mounted, the node_modules will be replaced by the linux version
+#   rm -rf ./backend/node_modules
+#   docker container cp myapp-backend-dev:/usr/src/app/node_modules ./backend
+# If error sh: 1: react-scripts: not found...
+#   rm -rf ./frontend/node_modules
+#   docker container cp myapp-frontend-dev:/usr/src/app/node_modules ./frontend
+
+# execute the following command to stop the container
+# docker compose -f docker-compose.dev.yml down
+
+# frontend
+# browse to http://localhost:3000
+# backend
+# browse to http://localhost:3003/api/users
+

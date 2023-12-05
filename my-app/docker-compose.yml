@@ -1,0 +1,36 @@
+version: '3.8' # Version 3.8 is quite new and should work
+
+services:
+  app:
+    image: myapp-frontend-prod
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    volumes:
+      - ./frontend/:/usr/src/app
+    ports:
+      - 8080:80
+    environment:
+      - REACT_APP_BACKEND_URL=http://server:3003/
+    container_name: myapp-front-prod
+
+  server:
+    image: myapp-backend-prod
+    build:
+      context: . # The context will pick this directory as the "build context"
+      dockerfile: ./backend/Dockerfile # This will simply tell which dockerfile to read
+    # volumes:
+    #   - ./backend/:/usr/src/app
+    ports:
+      - 3003:3003
+    container_name: myapp-backend-prod # This will name the container hello-front-dev
+
+# execute the following command to start the container
+# docker compose -f docker-compose.yml up
+# execute the following command to stop the container
+# docker compose -f docker-compose.yml down
+
+# frontend
+# browse to http://localhost:8080
+# backend
+# browse to http://localhost:3003/api/users
